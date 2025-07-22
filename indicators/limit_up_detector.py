@@ -17,11 +17,11 @@ def detect_limit_up(order_book_ids):
         # 获取实时行情数据
         snapshot = rqdatac.get_live_ticks (
             order_book_ids=order_book_ids,
-            fields=["close", "prev_close"]
+            fields=["last", "prev_close"]
         )
         
         # 计算涨跌幅
-        pct_chg = (snapshot['close'] - snapshot['prev_close']) / snapshot['prev_close'] * 100
+        pct_chg = (snapshot['last'] - snapshot['prev_close']) / snapshot['prev_close'] * 100
         
         # 筛选涨停股（涨跌幅≥9.95%）
         limit_up = pct_chg >= 9.95

@@ -18,11 +18,11 @@ def calculate_3m_lsi(order_book_ids, window=3):
         # 获取实时行情数据
         snapshot = rqdatac.get_live_ticks (
             order_book_ids=order_book_ids,
-            fields=["close", "volume", "total_turnover"]
+            fields=["last", "volume", "total_turnover"]
         )
         
         # 计算3分钟涨跌幅
-        price_change = snapshot['close'].pct_change(periods=window)
+        price_change = snapshot['last'].pct_change(periods=window)
         
         # 计算成交量放大系数（当前成交量/过去20日均量）
         vol_ma = snapshot['volume'].rolling(window=20).mean().iloc[-1]
